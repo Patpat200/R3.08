@@ -7,6 +7,22 @@ class Point:
         self.__x = x
         self.__y = y # __ = privé en python
 
+    @property
+    def x(self) -> float:
+        return self.__x
+
+    @x.setter
+    def x(self, x:float):
+        return self.__x
+
+    @property
+    def y(self) -> float:
+        return self.__y
+
+    @y.setter
+    def y(self, y: float):
+        return self.__y
+
     def __str__(self):
         return f"Point {self.__x},{self.__y}"
 
@@ -25,10 +41,20 @@ class Cercle:
         else:
             self.__centre = centre
 
-        self.__rayon = rayon
+        self.rayon = rayon
 
     def __str__(self):
         return f"Cercle : centre = {self.__centre}, rayon = {self.__rayon}"
+
+    @property
+    def rayon(self) -> float:
+        return self.__rayon
+
+    @rayon.setter
+    def rayon(self, valeur: float):
+        if valeur < 0:
+            raise ValueError("Un rayon ne peut pas être négatif !")
+        self.__rayon = valeur
 
     def diametre(self) -> float:
         return 2 * self.__rayon
@@ -52,8 +78,7 @@ class Cercle:
 
 class Rectangle:
 
-    def __init__(self, point: Point = None, longueur: float = 1, hauteur: float = 1,
-                 pointHautDroit: Point = None):
+    def __init__(self, point: Point = None, longueur: float = 1, hauteur: float = 1, pointHautDroit: Point = None):
 
         if point is None:
             self.__pointBasGauche = Point()

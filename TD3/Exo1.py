@@ -29,8 +29,6 @@ class Point:
 
 
 
-
-
     @property
     def y(self):
         return self.__y
@@ -41,8 +39,6 @@ class Point:
         if not isinstance(valeur, (int, float)):
             raise TypeError("La coordonnée y doit être un nombre")
         self.__y = float(valeur)
-
-
 
 
 
@@ -78,6 +74,8 @@ class Cercle:
 
 
 if __name__ == "__main__":
+
+    # Division
     try:
         print(division(1, 12))
 
@@ -93,11 +91,7 @@ if __name__ == "__main__":
     finally:
         print("\nFin du test")
 
-
-
-
-
-
+    # Point
     try:
         point1 = Point(2, 3)
         print(f"\nPoint créé : ({point1.x}, {point1.y})")

@@ -32,7 +32,6 @@ class Point:
     def distancePoint(self, camarade: Point) -> float:
         return self.distanceCoord(camarade.__x, camarade.__y)
 
-
 class Cercle:
 
     def __init__(self, rayon: float, centre: Point = None):

@@ -90,6 +90,9 @@ if __name__ == "__main__":
     except ValueError as vaerr:
         print(f"\nErreur : {vaerr}")
 
+    finally:
+        print("\nFin du test")
+
 
 
 

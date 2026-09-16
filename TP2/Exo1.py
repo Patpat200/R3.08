@@ -144,9 +144,30 @@ class Mage(Personnage):
             return self.__mana
 
 
+
+
+class Joueur(Personnage):
+
+    def __init__(self, nom:str, max_personnages: int):
+        self.__nom = nom
+        self.__max_personnages = max_personnages
+        self.__personnages = []
+
+
+    def ajout_perso(self, perso):
+        if len(self.__personnages) < self.__max_personnages:
+            self.__personnages.append(perso)
+            print(f"{perso} ajouté")
+
+        else:
+            print(f"Ajout impossible")
+
+
+
+
+
 if __name__ == "__main__":
     joueur1 = Guerrier("Gregos le chevalier", 15)
     joueur2 = Mage("Patpat", 15)
     joueur1.combat(joueur2)
 
-    #paysan1.soigner()

@@ -1,4 +1,3 @@
-from statistics import pvariance
 
 
 class Personnage:
@@ -68,20 +67,20 @@ class Personnage:
     def _attaque(self, opposant:Personnage):
 
         if opposant.__initiative > self.__initiative:
-            self.__pv -= opposant.__niveau
+            self.__pv -= opposant.degat()
 
             if self.__pv > 0:
-                opposant.__pv -= self.__niveau
+                opposant.__pv -= self.degat()
 
         elif opposant.__initiative < self.__initiative:
-            opposant.__pv -= self.__niveau
+            opposant.__pv -= self.degat()
 
             if opposant.__pv > 0:
-                self.__pv -= opposant.__niveau
+                self.__pv -= opposant.degat()
 
         else:
-            self.__pv -= opposant.__niveau
-            opposant.__pv -= self.__niveau
+            self.__pv -= opposant.degat()
+            opposant.__pv -= self.degat()
 
 
     def combat(self, opposant:Personnage):
@@ -106,12 +105,48 @@ class Personnage:
     def soigner(self):
         self.__pv = self.__pv + self.__niveau
 
+    def degat(self):
+        return self.__niveau
 
 
+
+
+
+class Guerrier(Personnage):
+
+    def __init__(self, pseudo:str, niveau=1):
+        super().__init__(pseudo, niveau)
+        self.pv = niveau * 8 + 4
+        self.initiative = niveau * 8 + 6
+        self.pv_max = niveau * 8 + 4
+
+    def degat(self):
+        return self.niveau * 2
+
+
+class Mage(Personnage):
+
+    def __init__(self, pseudo:str, niveau=1):
+        super().__init__(pseudo, niveau)
+        self.pv = niveau * 5 + 10
+        self.initiative = niveau * 6 + 4
+        self.pv_max = niveau * 5 + 10
+        self.__mana = niveau * 5
+
+
+    def degat(self):
+
+        if self.__mana > 0:
+            self.__mana -= 4
+            return self.__mana + 3
+
+        else:
+            return self.__mana
 
 
 if __name__ == "__main__":
-    paysan1 = Personnage("Gregos le chevalier", 67)
-    paysan2 = Personnage("Patpat", 68)
-    paysan1.combat(paysan2)
-    paysan1.soigner()
+    joueur1 = Guerrier("Gregos le chevalier", 15)
+    joueur2 = Mage("Patpat", 15)
+    joueur1.combat(joueur2)
+
+    #paysan1.soigner()

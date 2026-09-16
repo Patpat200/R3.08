@@ -68,7 +68,7 @@ class Personnage:
     def _attaque(self, opposant:Personnage):
 
         if opposant.__initiative > self.__initiative:
-            self.__pv -=opposant.__niveau
+            self.__pv -= opposant.__niveau
 
             if self.__pv > 0:
                 opposant.__pv -= self.__niveau
@@ -80,14 +80,14 @@ class Personnage:
                 self.__pv -= opposant.__niveau
 
         else:
-            self.__pv -=opposant.__niveau
-            opposant.__pv -=self.__niveau
+            self.__pv -= opposant.__niveau
+            opposant.__pv -= self.__niveau
 
 
     def combat(self, opposant:Personnage):
 
         tour = 1
-        while opposant.__pv > 0 or self.__pv > 0:
+        while opposant.__pv > 0 and self.__pv > 0:
             print(f"Tour {tour}")
             self._attaque(opposant)
             print(f"{opposant.__pseudo} : {opposant.__pv} | {self.__pseudo} : {self.__pv} PV")
@@ -110,4 +110,8 @@ class Personnage:
 
 
 
-
+if __name__ == "__main__":
+    paysan1 = Personnage("Gregos le chevalier", 67)
+    paysan2 = Personnage("Patpat", 68)
+    paysan1.combat(paysan2)
+    paysan1.soigner()

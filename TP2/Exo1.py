@@ -108,6 +108,15 @@ class Personnage:
     def degat(self):
         return self.__niveau
 
+    def __str__(self):
+        return f"{self.pseudo}, Niv {self.niveau}"
+
+
+    def __eq__(self, opposant):
+        if isinstance(opposant, Personnage):
+            return self.pseudo == opposant.pseudo
+        return False
+
 
 
 
@@ -117,7 +126,7 @@ class Guerrier(Personnage):
     def __init__(self, pseudo:str, niveau=1):
         super().__init__(pseudo, niveau)
         self.pv = niveau * 8 + 4
-        self.initiative = niveau * 8 + 6
+        self.initiative = niveau * 4 + 6
         self.pv_max = niveau * 8 + 4
 
     def degat(self):
@@ -153,6 +162,25 @@ class Joueur(Personnage):
         self.__max_personnages = max_personnages
         self.__personnages = []
 
+    @property
+    def personnages(self) -> list:
+        return self.__personnages
+
+    @personnages.setter
+    def personnages(self, nv_personnages):
+        if not isinstance(nv_personnages, list):
+            raise TypeError
+        self.__personnages = nv_personnages
+
+    @property
+    def nom(self) -> str:
+        return self.__nom
+
+    @nom.setter
+    def nom(self, nv_nom):
+        if not isinstance(nv_nom, str):
+            raise TypeError
+        self.__nom = nv_nom
 
     def ajout_perso(self, perso):
         if len(self.__personnages) < self.__max_personnages:
@@ -162,12 +190,65 @@ class Joueur(Personnage):
         else:
             print(f"Ajout impossible")
 
+    def get_personnage_num(self, numero):
+        if 0 <= numero < len(self.__personnages):
+            return self.__personnages[numero]
+        return None
+
+    def get_personnage_pseudo(self, pseudo):
+        for p in self.__personnages:
+            if p.pseudo == pseudo:
+                return p
+        return None
+
+    def get_personnage_perso(self, p_recherche):
+        for p in self.__personnages:
+            if p == p_recherche:
+                return p
+        return None
 
 
+    def eliminer_personnage_numero(self, numero):
+        if 0 <= numero < len(self.__personnages):
+            p = self.__personnages.pop(numero)
+            print(f"Personnage {p.pseudo} éliminé")
+
+    def eliminer_personnage_pseudo(self, pseudo):
+        p = self.get_personnage_pseudo(pseudo)
+        if p:
+            self.__personnages.remove(p)
+            print(f"Personnage {pseudo} éliminé")
+
+    def eliminer_personnage_perso(self, p_recherche):
+        if p_recherche in self.__personnages:
+            self.__personnages.remove(p_recherche)
+            print(f"Personnage {p_recherche.pseudo} éliminé")
 
 
 if __name__ == "__main__":
-    joueur1 = Guerrier("Gregos le chevalier", 15)
-    joueur2 = Mage("Patpat", 15)
-    joueur1.combat(joueur2)
+    # Combat
+    chevalier = Guerrier("Gregos le chevalier", 15)
+    sorcier = Mage("Patpat", 15)
+    chevalier.combat(sorcier)
+
+    # Soins
+    print(f"\nPV de {chevalier.pseudo} après le combat : {chevalier.pv}")
+    chevalier.soigner()
+    print(f"PV de {chevalier.pseudo} après un soin {chevalier.niveau} PV : {chevalier.pv}")
+
+    joueur1 = Joueur("Joueur 1", 2)
+    joueur2 = Joueur("Joueur 2", 3)
+
+    p1 = Guerrier("Garen", 10)
+    p2 = Mage("Ryze", 10)
+    p3 = Personnage("Paysan", 1)
+
+    joueur1.ajout_perso(p1)
+    joueur1.ajout_perso(p2)
+    joueur1.ajout_perso(p3)
+
+    joueur2.ajout_perso(p3)
+
+    print("\nSuppression d'un personnage :")
+    joueur1.eliminer_personnage_pseudo("Garen")
 

@@ -1,6 +1,5 @@
 
 from Exo1 import Personnage, Guerrier, Mage, Joueur
-import pytest
 
 def test_initialisation_personnage():
     perso = Personnage("Aventurier", 10)

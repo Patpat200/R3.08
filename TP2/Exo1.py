@@ -162,6 +162,9 @@ class Joueur(Personnage):
         self.__max_personnages = max_personnages
         self.__personnages = []
 
+    def __str__(self):
+        return f"{self.__nom} {self.__max_personnages} {self.__personnages}"
+
     @property
     def personnages(self) -> list:
         return self.__personnages
@@ -208,7 +211,7 @@ class Joueur(Personnage):
         return None
 
 
-    def eliminer_personnage_numero(self, numero):
+    def eliminer_personnage_numero(self, numero:int):
         if 0 <= numero < len(self.__personnages):
             p = self.__personnages.pop(numero)
             print(f"Personnage {p.pseudo} éliminé")
@@ -232,9 +235,9 @@ if __name__ == "__main__":
     chevalier.combat(sorcier)
 
     # Soins
-    print(f"\nPV de {chevalier.pseudo} après le combat : {chevalier.pv}")
+    print(f"\nPV de {chevalier.pseudo} après combat : {chevalier.pv}")
     chevalier.soigner()
-    print(f"PV de {chevalier.pseudo} après un soin {chevalier.niveau} PV : {chevalier.pv}")
+    print(f"PV de {chevalier.pseudo} après soin {chevalier.niveau} PV : {chevalier.pv}")
 
     joueur1 = Joueur("Joueur 1", 2)
     joueur2 = Joueur("Joueur 2", 3)
@@ -251,4 +254,6 @@ if __name__ == "__main__":
 
     print("\nSuppression d'un personnage :")
     joueur1.eliminer_personnage_pseudo("Garen")
+    joueur1.eliminer_personnage_numero(0)
+    joueur2.eliminer_personnage_perso(Personnage) # ou p3
 
